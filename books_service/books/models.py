@@ -26,5 +26,11 @@ class Book(models.Model):
         verbose_name_plural = 'Books'
         ordering = ['id']
 
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        book = Book.objects.filter(id=self.id)
+        if book.exists():
+            book.get(id=self.id).image.delete(False)
+        return super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+
     def __str__(self):
         return f'Продукт: {self.name} | Категория: {self.category.name}'
