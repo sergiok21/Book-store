@@ -40,6 +40,7 @@ class Preview(models.Model):
     book = models.OneToOneField(to=Book, related_name='previews', on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     description = models.TextField()
+    image = models.ImageField(upload_to='books_images', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Preview'
@@ -54,6 +55,8 @@ class Recommendation(models.Model):
     book = models.OneToOneField(to=Book, related_name='recommendations', on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    image = models.ImageField(upload_to='books_images', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Recommendation'
@@ -62,3 +65,16 @@ class Recommendation(models.Model):
 
     def __str__(self):
         return f'Name: {self.name}'
+
+
+class Partner(models.Model):
+    name = models.CharField(max_length=128)
+    image = models.ImageField(upload_to='partners_images', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Partner'
+        verbose_name_plural = 'Partners'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'Company: {self.name}'

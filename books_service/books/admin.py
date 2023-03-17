@@ -1,13 +1,12 @@
 from django.contrib import admin
 
-from books.models import Book, BookCategory, Preview, Recommendation
+from books.models import Book, BookCategory, Preview, Recommendation, Partner
 
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'quantity', 'category']
     fields = ['name', 'description', ('price', 'quantity'), 'image', 'category']
-    readonly_fields = ['description']
     search_fields = ['name', 'price']
     search_help_text = 'Name | Price'
     ordering = ['name']
@@ -29,6 +28,7 @@ class PreviewAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.name = obj.book.name
         obj.description = obj.book.description
+        obj.image = obj.book.image
         obj.save()
 
 
@@ -40,4 +40,12 @@ class RecommendationAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.name = obj.book.name
         obj.description = obj.book.description
+        obj.price = obj.book.price
+        obj.image = obj.book.image
         obj.save()
+
+
+@admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    fields = ['name', 'image']

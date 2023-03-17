@@ -1817,14 +1817,14 @@ footer#footer {
     text-align: center;
     line-height: 3;
     position: absolute;
-    bottom: 300px;
+    bottom: 200px;
     left: 40px;
     z-index: 9;
     opacity: 0;
     transition: 0.5s ease-out;
 }
 .product-style:hover button.add-to-cart {
-    bottom: 380px;
+    bottom: 480px;
     opacity: 1;
 }
 .product-style figcaption {  

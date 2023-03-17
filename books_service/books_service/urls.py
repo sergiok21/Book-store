@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import path, include
 
 urlpatterns = [
-    path('users/admin/', admin.site.urls),
+    path('books/admin/', admin.site.urls),
     path('', lambda req: redirect('books/')),
     path('books/', include('books.urls', namespace='index')),
 ]

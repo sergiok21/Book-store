@@ -1,9 +1,5 @@
 .idea/
 venv/
 
-books_service/.env/
-books_service/__pycache__/
-books_service/books_service/__pycache__/
-books_service/books/__pycache__/
-books_service/common/__pycache__/
-books_service/books/migrations/__pycache__/
+**/__pycache__/
+books_service/.env
