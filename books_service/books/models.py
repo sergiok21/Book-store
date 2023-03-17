@@ -33,4 +33,30 @@ class Book(models.Model):
         return super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def __str__(self):
-        return f'Продукт: {self.name} | Категория: {self.category.name}'
+        return f'Name: {self.name} | Category: {self.category.name}'
+
+
+class Preview(models.Model):
+    name = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    description = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Preview'
+        verbose_name_plural = 'Previews'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'Name: {self.name}'
+
+
+class Recommendation(models.Model):
+    name = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    description = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Recommendation'
+        verbose_name_plural = 'Recommendations'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'Name: {self.name}'

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from books.models import Book, BookCategory
+from books.models import Book, BookCategory, Preview, Recommendation
 
 
 @admin.register(Book)
@@ -19,3 +19,15 @@ class BookCategoryAdmin(admin.ModelAdmin):
     fields = ['name', 'description']
     search_fields = ['name']
     search_help_text = 'Name'
+
+
+@admin.register(Preview)
+class PreviewAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    fields = ['name', 'description']
+
+
+@admin.register(Recommendation)
+class RecommendationAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    fields = ['name', 'description']

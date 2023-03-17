@@ -1,3 +1,6 @@
 .idea/
 venv/
 books_service/.env/
+books_service/__pycache__/
+books_service/books_service/__pycache__/
+books_service/books/__pycache__/
