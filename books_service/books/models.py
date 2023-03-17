@@ -37,8 +37,9 @@ class Book(models.Model):
 
 
 class Preview(models.Model):
-    name = models.ForeignKey(to=Book, on_delete=models.CASCADE)
-    description = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    book = models.OneToOneField(to=Book, related_name='previews', on_delete=models.CASCADE)
+    name = models.CharField(max_length=256)
+    description = models.TextField()
 
     class Meta:
         verbose_name = 'Preview'
@@ -46,12 +47,13 @@ class Preview(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f'Name: {self.name}'
+        return f'Name: {self.book.name}'
 
 
 class Recommendation(models.Model):
-    name = models.ForeignKey(to=Book, on_delete=models.CASCADE)
-    description = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    book = models.OneToOneField(to=Book, related_name='recommendations', on_delete=models.CASCADE)
+    name = models.CharField(max_length=256)
+    description = models.TextField()
 
     class Meta:
         verbose_name = 'Recommendation'

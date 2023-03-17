@@ -7,6 +7,7 @@ from django.urls import path, include
 urlpatterns = [
     path('users/admin/', admin.site.urls),
     path('', lambda req: redirect('books/')),
+    path('books/', include('books.urls', namespace='index')),
 ]
 
 if settings.DEBUG:

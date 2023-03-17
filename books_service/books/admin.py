@@ -24,10 +24,20 @@ class BookCategoryAdmin(admin.ModelAdmin):
 @admin.register(Preview)
 class PreviewAdmin(admin.ModelAdmin):
     list_display = ['name']
-    fields = ['name', 'description']
+    fields = ['book']
+
+    def save_model(self, request, obj, form, change):
+        obj.name = obj.book.name
+        obj.description = obj.book.description
+        obj.save()
 
 
 @admin.register(Recommendation)
 class RecommendationAdmin(admin.ModelAdmin):
     list_display = ['name']
-    fields = ['name', 'description']
+    fields = ['book']
+
+    def save_model(self, request, obj, form, change):
+        obj.name = obj.book.name
+        obj.description = obj.book.description
+        obj.save()
