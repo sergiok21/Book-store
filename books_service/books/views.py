@@ -1,9 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, ListView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 from books.forms import MessageForm
-from books.models import Contact, Message, Book
+from books.models import Contact, Book
 from common.views import TitleMixin
 
 
@@ -15,9 +14,9 @@ class IndexView(TitleMixin, TemplateView):
 class ContactCreateView(TitleMixin, CreateView):
     model = Contact
     template_name = 'books/contact.html'
-    title = 'Book Store - Contact'
     context_object_name = 'contacts'
     form_class = MessageForm
+    title = 'Book Store - Contact'
     success_url = reverse_lazy('books:contact')
 
     def get_queryset(self):
@@ -30,8 +29,8 @@ class ContactCreateView(TitleMixin, CreateView):
 class BooksListView(TitleMixin, ListView):
     model = Book
     template_name = 'books/shop.html'
-    title = 'Book Store - Products'
     context_object_name = 'books'
+    title = 'Book Store - Products'
     paginate_by = 6
 
     def get(self, request, *args, **kwargs):
@@ -43,3 +42,10 @@ class BooksListView(TitleMixin, ListView):
         else:
             self.queryset = Book.objects.filter(category__name__icontains=category)
             return super().get(request, *args, **kwargs)
+
+
+class ReviewListView(TitleMixin, DetailView):
+    model = Book
+    template_name = 'books/single-product.html'
+    context_object_name = 'book'
+    title = 'Book Store - Details'
