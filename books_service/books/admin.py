@@ -60,7 +60,7 @@ class ContactAdmin(admin.ModelAdmin):
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['__str__']
-    fields = [('name', 'email'), 'message']
+    fields = ['name', 'email', 'message']
     readonly_fields = [field.name for field in Message._meta.get_fields()]
 
     def has_add_permission(self, request):
