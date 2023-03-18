@@ -1,2 +1,6 @@
 .idea/
 venv/
+
+**/__pycache__/
+books_service/
+users_service/.env
