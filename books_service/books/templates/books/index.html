@@ -16,7 +16,7 @@
 							<h2 class="banner-title">{{ preview.name }}</h2>
 							<p>{{ preview.description }}</p>
 							<div class="btn-wrap">
-								<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
+								<a href="{% url 'books:review' preview.book.id %}" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
 							</div>
 						</div><!--banner-content--> 
 						<img src="{{ preview.image.url }}" alt="banner" class="banner-image">
@@ -66,7 +66,7 @@
                         {% for recommendation in recommendations %}
                             <div class="col-md-3">
                                 <figure class="product-style">
-                                    <a href="single-product.html">
+                                    <a href="{% url 'books:review' recommendation.book.id %}">
                                         <img src="{{ recommendation.image.url }}" alt="Book" class="product-item">
                                     </a>
                                     <figcaption>
@@ -116,7 +116,7 @@
 								<p>{{ books.first.description }}</p>
 								<div class="item-price">$ {{ books.first.price }}</div>
 								<div class="btn-wrap">
-									<a href="#" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
+									<a href="{% url 'books:review' books.first.id %}" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
 								</div>
 							</div>
 						</div>

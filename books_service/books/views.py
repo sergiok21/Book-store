@@ -38,13 +38,12 @@ class BooksListView(TitleMixin, ListView):
         self.extra_context = {'category': category}
         if category == 'all':
             self.queryset = Book.objects.all()
-            return super().get(request, *args, **kwargs)
         else:
             self.queryset = Book.objects.filter(category__name__icontains=category)
-            return super().get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
-class ReviewListView(TitleMixin, DetailView):
+class ReviewDetailView(TitleMixin, DetailView):
     model = Book
     template_name = 'books/single-product.html'
     context_object_name = 'book'
