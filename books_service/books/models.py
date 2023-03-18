@@ -78,3 +78,28 @@ class Partner(models.Model):
 
     def __str__(self):
         return f'Company: {self.name}'
+
+
+class Contact(models.Model):
+    email = models.EmailField()
+    phone = models.CharField(max_length=16)
+    country = models.CharField(max_length=32)
+    city = models.CharField(max_length=32)
+    street = models.CharField(max_length=64)
+    house = models.SmallIntegerField(default=1)
+    corps = models.SmallIntegerField(default=1)
+    postal = models.CharField(max_length=8)
+
+
+class Message(models.Model):
+    name = models.CharField(max_length=64)
+    email = models.EmailField()
+    message = models.TextField()
+
+    class Meta:
+        verbose_name = 'Partner'
+        verbose_name_plural = 'Partners'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'Email: {self.email} | Message: {self.message}'
