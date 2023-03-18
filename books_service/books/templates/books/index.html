@@ -3,11 +3,9 @@
 
 {% block content %}
 <section id="billboard">
-
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
 				<button class="prev slick-arrow">
 					<i class="icon icon-arrow-left"></i>
 				</button>
@@ -34,7 +32,6 @@
 			</div>
 		</div>
 	</div>
-	
 </section>
 
 <section id="client-holder" data-aos="fade-up">
@@ -57,71 +54,31 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+                <div class="section-header align-center">
+                    <div class="title">
+                        <span>Some quality items</span>
+                    </div>
+                    <h2 class="section-title">Featured Books</h2>
+                </div>
 
-			<div class="section-header align-center">
-				<div class="title">
-					<span>Some quality items</span>
-				</div>
-				<h2 class="section-title">Featured Books</h2>
-			</div>
-
-			<div class="product-list" data-aos="fade-up">
-				<div class="row">
-                    {% for recommendation in recommendations %}
-                        <div class="col-md-3">
-                            <figure class="product-style">
-                                <a href="single-product.html">
-                                    <img src="{{ recommendation.image.url }}" alt="Book" class="product-item">
-                                </a>
-                                <figcaption>
-                                    <h3>{{ recommendation.name }}</h3>
-                                    <br>
-                                    <div class="item-price">$ {{ recommendation.price | intcomma }}</div>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    {% endfor %}
-				
-{#					<div class="col-md-3">#}
-{#						<figure class="product-style">#}
-{#							<img src="../../../static/vendor/images/product-item2.jpg" alt="Books" class="product-item">#}
-{#								<button type="button" class="add-to-cart" data-product-tile="add-to-cart">View</button>#}
-{#							<figcaption>#}
-{#								<h3>Great travel at desert</h3>#}
-{#								<p>Sanchit Howdy</p>#}
-{#								<div class="item-price">$ 38.00</div>#}
-{#							</figcaption>#}
-{#						</figure>#}
-{#					</div>#}
-{##}
-{#					<div class="col-md-3">#}
-{#						<figure class="product-style">#}
-{#							<img src="../../../static/vendor/images/product-item3.jpg" alt="Books" class="product-item">#}
-{#								<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>#}
-{#							<figcaption>#}
-{#								<h3>The lady beauty Scarlett</h3>#}
-{#								<p>Arthur Doyle</p>#}
-{#								<div class="item-price">$ 45.00</div>#}
-{#							</figcaption>#}
-{#						</figure>#}
-{#					</div>#}
-{#									#}
-{#					<div class="col-md-3">#}
-{#						<figure class="product-style">#}
-{#							<img src="../../../static/vendor/images/product-item4.jpg" alt="Books" class="product-item">#}
-{#								<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>#}
-{#							<figcaption>#}
-{#								<h3>Once upon a time</h3>#}
-{#								<p>Klien Marry</p>#}
-{#								<div class="item-price">$ 35.00</div>#}
-{#							</figcaption>#}
-{#						</figure>#}
-{#					</div>#}
-
-			    </div><!--ft-books-slider-->				
-			</div><!--grid-->
-
-
+                <div class="product-list" data-aos="fade-up">
+                    <div class="row">
+                        {% for recommendation in recommendations %}
+                            <div class="col-md-3">
+                                <figure class="product-style">
+                                    <a href="single-product.html">
+                                        <img src="{{ recommendation.image.url }}" alt="Book" class="product-item">
+                                    </a>
+                                    <figcaption>
+                                        <h3>{{ recommendation.name }}</h3>
+                                        <br>
+                                        <div class="item-price">$ {{ recommendation.price | intcomma }}</div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    </div><!--ft-books-slider-->
+                </div><!--grid-->
 			</div><!--inner-content-->
 		</div>
 		
@@ -134,6 +91,7 @@
 				
 			</div>		
 		</div>
+
 	</div>
 </section>
 
@@ -141,11 +99,8 @@
 	<div class="corner-pattern-overlay"></div>
 	<div class="container">
 		<div class="row">
-
 			<div class="col-md-8 col-md-offset-2">
-
 				<div class="row">
-
 					<div class="col-md-6">
 						<figure class="products-thumb">
 							<img src="{{ books.first.image.url }}" alt="book" class="single-image">
@@ -164,13 +119,9 @@
 									<a href="#" class="btn-accent-arrow">shop it now <i class="icon icon-ns-arrow-right"></i></a>
 								</div>
 							</div>
-
 						</div>
 					</div>
-
 				</div>
-				<!-- / row -->
-
 			</div>
 
 		</div>
