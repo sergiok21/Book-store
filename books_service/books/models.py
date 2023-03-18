@@ -33,7 +33,7 @@ class Book(models.Model):
         return super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def __str__(self):
-        return f'Name: {self.name} | Category: {self.category.name}'
+        return f'Name: {self.name} | Category: {self.category.name} | Price: {self.price} | Quantity: {self.quantity}'
 
 
 class Preview(models.Model):
@@ -90,6 +90,14 @@ class Contact(models.Model):
     corps = models.SmallIntegerField(default=1)
     postal = models.CharField(max_length=8)
 
+    class Meta:
+        verbose_name = 'Contact'
+        verbose_name_plural = 'Contacts'
+        ordering = ['id']
+
+    def __str__(self):
+        return f'Email: {self.email} | Phone: {self.phone} | Country: {self.country}'
+
 
 class Message(models.Model):
     name = models.CharField(max_length=64)
@@ -97,8 +105,8 @@ class Message(models.Model):
     message = models.TextField()
 
     class Meta:
-        verbose_name = 'Partner'
-        verbose_name_plural = 'Partners'
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
         ordering = ['id']
 
     def __str__(self):
