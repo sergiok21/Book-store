@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
+from books.context_processors import get_user_info
 from books.forms import MessageForm
 from books.models import Contact, Book
 from common.views import TitleMixin
@@ -9,6 +10,14 @@ from common.views import TitleMixin
 class IndexView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
     title = 'Book Store'
+
+    def get(self, request, *args, **kwargs):
+        test = get_user_info(request)
+        if request.user.is_authenticated:
+            print('')
+        else:
+            print('')
+        return super().get(request, *args, **kwargs)
 
 
 class ContactCreateView(TitleMixin, CreateView):
