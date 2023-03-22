@@ -5,9 +5,9 @@ from django.shortcuts import redirect
 from django.urls import path, include
 
 urlpatterns = [
-    path('books/admin/', admin.site.urls),
-    path('', lambda req: redirect('books/')),
-    path('books/', include('books.urls', namespace='books')),
+    path('api/books/admin/', admin.site.urls),
+    path('', lambda req: redirect('api/books/')),
+    path('api/books/', include('books.urls', namespace='books')),
 ]
 
 if settings.DEBUG:
