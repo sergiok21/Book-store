@@ -1,0 +1,62 @@
+{% extends 'books/base.html' %}
+{% load cache %}
+
+
+{% block content %}
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">			
+				<div class="colored">
+					<h1 class="page-title">Shop</h1>
+					<div class="breadcum-items">
+						<span class="item"><a href="{% url 'books:index' %}">Home /</a></span>
+						<span class="item colored">Shop</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!--site-banner-->
+
+<section class="padding-large">
+	<div class="container">
+		<div class="row">
+
+			<div class="products-grid grid">
+                {% for book in all_books.results %}
+			  	<figure class="product-style">
+                    <a href="{% url 'books:review' book.id %}">
+                        <img src="{{ book.image }}" alt="Books" class="product-item">
+                    </a>
+					<figcaption>
+						<h3>{{ book.name }}</h3>
+						<br>
+						<div class="item-price">$ {{ book.price }}</div>
+					</figcaption>
+				</figure>
+                {% endfor %}
+	    	</div>
+
+			<div style="display: flex; justify-content: center">
+                {% if all_books.previous %}
+                <a href="{% url 'books:paginator' category=category page=all_books.page_number|add:-1 %}">
+                    <button class="prev slick-arrow" style="margin-right: 10px">
+                        <i class="icon icon-arrow-left"></i>
+                    </button>
+                </a>
+                {% endif %}
+				<p> </p>
+                {% if all_books.next %}
+                 <a href="{% url 'books:paginator' category=category page=all_books.page_number|add:1 %}">
+                    <button class="next slick-arrow" style="margin-left: 10px">
+                        <i class="icon icon-arrow-right"></i>
+                    </button>
+                </a>
+                {% endif %}
+			</div>
+
+		</div>
+	</div>
+</section>
+{% endblock %}
