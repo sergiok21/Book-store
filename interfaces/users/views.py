@@ -43,15 +43,6 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, FormView):
                       'Check your e-mail for verification this account.'
     title = 'Book Store - Registration'
 
-    def form_valid(self, form):
-        # if form.cleaned_data['password'] == form.cleaned_data['password2']:
-        req = requests.post('http://127.0.0.1:8000/api/users/registration/', data=form.cleaned_data)
-        if req.status_code == status.HTTP_201_CREATED:
-            return super().form_valid(form)
-        else:
-            form._errors = req.json().get('text')
-            return self.form_invalid(form)
-
 
 class EmailVerificationView(TitleMixin, TemplateView):
     template_name = 'users/email_verification.html'
