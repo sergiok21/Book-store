@@ -30,8 +30,8 @@
 							<li><i class="icon icon-phone"></i>{{ contact.phone }}</li>
 							<li><i class="icon icon-envelope-o"></i><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></li>
 							<li><i class="icon icon-location2"></i>
-                                {{ contact.street }}, {{ contact.house }},
-                                {% if contact.corps > 0 %} {{ contact.corps }}, {% endif %}
+                                {{ contact.street }}, {{ contact.house }}
+                                {% if contact.corps %}/ {{ contact.corps }} {% endif %},
                                 {{ contact.postal }}
                             </li>
 						</ul>

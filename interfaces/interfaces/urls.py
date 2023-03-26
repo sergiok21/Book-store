@@ -5,6 +5,7 @@ from django.urls import path, include
 urlpatterns = [
     path('', lambda req: redirect('books/')),
     path('books/', include('books.urls', namespace='books')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 
 if settings.DEBUG:

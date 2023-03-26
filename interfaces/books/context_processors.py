@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 
@@ -24,4 +26,15 @@ def books_info(request):
     books = requests.get('http://127.0.0.1:8001/api/books/all/2/')
     context['books'] = books.json()
 
+    return context
+
+
+def user_info(request):
+    context = {'username': None}
+    token = request.COOKIES.get('Authorization')
+    if token:
+        req = requests.get('http://127.0.0.1:8000/api/users/login',
+                           headers={'Authorization': f'Token {token}'},
+                           params={'token': token})
+        context = json.loads(req.text).get('user_data')
     return context

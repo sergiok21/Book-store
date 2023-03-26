@@ -1,14 +1,24 @@
+import json
+
 import requests
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView
 
-from books.forms import MessageForm
+from books.forms import MessageForm, ProfileForm
 from common.views import TitleMixin
 
 
 class IndexView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
     title = 'Book Store'
+
+    # def get(self, request, *args, **kwargs):
+    #     response = super().get(request, *args, **kwargs)
+    #     if self.request.COOKIES.get('Authorization'):
+    #         token = self.request.COOKIES.get('Authorization')
+    #         req = requests.get(f'http://127.0.0.1:8000/api/users/login', params={'token': token})
+    #         username = json.loads(req.text)
+    #     return response
 
 
 class BooksListView(TitleMixin, TemplateView):
@@ -51,6 +61,39 @@ class ContactCreateView(TitleMixin, FormView):
     def form_valid(self, form):
         requests.post('http://127.0.0.1:8001/api/books/messages/', data=form.cleaned_data)
         return super().form_valid(form)
+
+
+class ProfileView(TitleMixin, FormView):
+    template_name = 'books/profile.html'
+    form_class = ProfileForm
+    success_url = reverse_lazy('books:profile')
+    title = 'Book Store - Profile'
+    user_id = None
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        token = self.request.COOKIES.get('Authorization')
+        if token:
+            req = requests.get('http://127.0.0.1:8000/api/users/login/',
+                               headers={'Authorization': f'Token {token}'},
+                               params={'token': token})
+            context = json.loads(req.text).get('user_data')
+            self.user_id = context.get('id')
+            kwargs['initial']['first_name'] = context.get('first_name')
+            kwargs['initial']['last_name'] = context.get('last_name')
+            kwargs['initial']['username'] = context.get('username')
+            kwargs['initial']['email'] = context.get('email')
+        # kwargs['my_attr'] = 'my_value'
+        return kwargs
+
+    def form_valid(self, form):
+        response = requests.patch(f'http://127.0.0.1:8000/api/users/user/{self.user_id}/',
+                                  headers={'Authorization': f'Token {self.request.COOKIES.get("Authorization")}'},
+                                  data=form.cleaned_data)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
 
 
 class ReviewDetailView(TitleMixin, TemplateView):

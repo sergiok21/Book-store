@@ -1,8 +1,6 @@
-from django.conf import settings
-from django.contrib.auth.views import LogoutView
-from django.urls import path, include
+from django.urls import path
 
-from books.views import IndexView, ContactCreateView, BooksListView, ReviewDetailView
+from .views import IndexView, ContactCreateView, BooksListView, ReviewDetailView, ProfileView
 
 app_name = 'books'
 
@@ -12,4 +10,5 @@ urlpatterns = [
     path('shop/<str:category>-books/<int:page>/', BooksListView.as_view(), name='paginator'),
     path('shop/review/<int:pk>/', ReviewDetailView.as_view(), name='review'),
     path('contact/', ContactCreateView.as_view(), name='contact'),
+    path('profile/', ProfileView.as_view(), name='profile'),
 ]
