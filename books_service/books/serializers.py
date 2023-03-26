@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from books.models import Book, BookCategory, Preview, Recommendation, Partner, Contact, Message
+from .models import Book, BookCategory, Preview, Recommendation, Partner, Contact, Message
 
 
 class BookSerializer(serializers.ModelSerializer):

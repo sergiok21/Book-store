@@ -1,11 +1,10 @@
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from books.models import Book, BookCategory, Preview, Recommendation, Partner, Contact, Message
-from books.serializers import PreviewSerializer, BookSerializer, RecommendationSerializer, PartnerSerializer, \
+from .models import Book, BookCategory, Preview, Recommendation, Partner, Contact, Message
+from .serializers import PreviewSerializer, BookSerializer, RecommendationSerializer, PartnerSerializer, \
     ContactSerializer, MessageSerializer, BookCategorySerializer
 from common.views import PermissionMixin
 from rest_framework.pagination import PageNumberPagination
@@ -96,19 +95,15 @@ class ContactAPIView(PermissionMixin, ModelViewSet):
     pagination_class = None
 
 
-class MessageAPIView(ModelViewSet):
+class MessageAPIView(APIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = []
+    permission_classes = []
 
-    def get_permissions(self):
-        if self.request.user.is_superuser:
-            return [AllowAny()]
-        return []
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        if self.request.user.is_superuser:
-            serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
-        return Response({'detail': 'Enter your message.'}, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
