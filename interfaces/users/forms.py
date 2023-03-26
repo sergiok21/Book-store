@@ -53,3 +53,23 @@ class UserRegistrationForm(forms.Form):
         'class': 'form-control py-4',
         'placeholder': 'Confirm password',
     }))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        data = {
+            'first_name': cleaned_data.get('first_name'),
+            'last_name': cleaned_data.get('last_name'),
+            'email': cleaned_data.get('email'),
+            'username': cleaned_data.get('username'),
+            'password': cleaned_data.get('password'),
+        }
+        if data['password'] != cleaned_data.get('password2'):
+            raise forms.ValidationError('Password mismatch.')
+        req = requests.post('http://127.0.0.1:8000/api/users/registration/', data=data)
+        if req.status_code == status.HTTP_400_BAD_REQUEST:
+            for error in req.json().get('errors').values():
+                raise forms.ValidationError(error)
+
+    def add_error(self, field, error):
+        errors = self.errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+        errors.append(error)

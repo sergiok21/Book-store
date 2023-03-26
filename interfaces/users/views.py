@@ -1,9 +1,8 @@
 import requests
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, FormView
 from rest_framework import status
@@ -45,18 +44,13 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, FormView):
     title = 'Book Store - Registration'
 
     def form_valid(self, form):
-        if form.cleaned_data['password'] == form.cleaned_data['password2']:
-            req = requests.post('http://127.0.0.1:8000/api/users/registration/', data=form.cleaned_data)
-            if req.status_code == status.HTTP_201_CREATED:
-                response = super().form_valid(form)
-                return response
-            else:
-                self.extra_context = {'errors': req.text}
-        # self.extra_context = {'errors': 'Password mismatch'}
-        return self.form_invalid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
+        # if form.cleaned_data['password'] == form.cleaned_data['password2']:
+        req = requests.post('http://127.0.0.1:8000/api/users/registration/', data=form.cleaned_data)
+        if req.status_code == status.HTTP_201_CREATED:
+            return super().form_valid(form)
+        else:
+            form._errors = req.json().get('text')
+            return self.form_invalid(form)
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
