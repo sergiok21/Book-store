@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
 from users.models import User
+from .tasks import send_email_verification
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -27,6 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
+        send_email_verification.delay(user.id)
         return user
 
 

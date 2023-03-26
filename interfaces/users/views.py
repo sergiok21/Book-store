@@ -2,13 +2,13 @@ import requests
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, FormView
 from rest_framework import status
 
 from common.views import TitleMixin
-from users.forms import UserLoginForm, UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm
 
 
 class UserLoginView(TitleMixin, FormView):
@@ -48,12 +48,9 @@ class EmailVerificationView(TitleMixin, TemplateView):
     template_name = 'users/email_verification.html'
     title = 'Book Store - E-mail confirmation'
 
-
-class LogoutView(View):
     def get(self, request, *args, **kwargs):
-        if request.COOKIES.get('Authorization'):
-            response = HttpResponseRedirect('http://127.0.0.1:8001/books/')
-            response.delete_cookie('Authorization')
-            return response
-        else:
-            return redirect('http://127.0.0.1:8000/users/login/')
+        code = kwargs['code']
+        response = requests.get('http://127.0.0.1:8000/api/users/verification/', params={'code': code})
+        if response.status_code == status.HTTP_200_OK:
+            return super().get(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('books:index'))

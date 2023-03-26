@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User
+from users.models import User, EmailVerification
 from users.serializers import RegistrationSerializer, TokenSerializer, UserSerializer
 
 
@@ -57,6 +57,23 @@ class RegistrationAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VerificationAPIView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        code = request.query_params.get('code')
+        verification = EmailVerification.objects.filter(code=code)
+        if verification.exists() and not verification.first().is_expired():
+            user = verification.first().user
+            user.is_verified_email = True
+            user.save()
+            verification.first().delete()
+            return Response({'detail': 'Email verified'}, status=status.HTTP_200_OK)
+        return Response({'error': 'Verification code does not exists or code is expired'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserAPIView(UpdateAPIView):
