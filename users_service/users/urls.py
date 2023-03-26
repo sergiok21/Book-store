@@ -1,14 +1,14 @@
-from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from users.views import UserLoginView, UserRegistrationView, EmailVerificationView, LoginAPIView
+from users.views import LoginAPIView, RegistrationAPIView, CallbackView, UserAPIView, LogoutAPIView
 
 app_name = 'users'
 
+
 urlpatterns = [
-    path('login/', UserLoginView.as_view(), name='login'),
-    path('registration/', UserRegistrationView.as_view(), name='registration'),
-    path('verify/<str:email>/<uuid:code>/', EmailVerificationView.as_view(), name='email_verification'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('api/login/', LoginAPIView.as_view(), name='login_api')
+    path('login/', LoginAPIView.as_view(), name='login'),
+    path('logout/', LogoutAPIView.as_view(), name='logout'),
+    path('registration/', RegistrationAPIView.as_view(), name='registration'),
+    path('callback/', CallbackView.as_view(), name='callback'),
+    path('user/<int:id>/', UserAPIView.as_view(), name='user'),
 ]
