@@ -18,8 +18,8 @@ class EmailVerification(models.Model):
 
     def send_verification_email(self):
         link = f'http://127.0.0.1:8005/users/verification/{self.user.email}/{self.code}/'
-        subject = f'Подтверждение учетной записи {self.user.username}'
-        message = f'Для подтверждения учетной записи для {self.user.email}, перейдите по ссылке {link}'
+        subject = f'Account Verification {self.user.username}'
+        message = f'To verify your email account {self.user.email}, please follow this link {link}'
         send_mail(
             subject=subject,
             message=message,

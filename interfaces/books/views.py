@@ -12,14 +12,6 @@ class IndexView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
     title = 'Book Store'
 
-    # def get(self, request, *args, **kwargs):
-    #     response = super().get(request, *args, **kwargs)
-    #     if self.request.COOKIES.get('Authorization'):
-    #         token = self.request.COOKIES.get('Authorization')
-    #         req = requests.get(f'http://127.0.0.1:8000/api/users/login', params={'token': token})
-    #         username = json.loads(req.text)
-    #     return response
-
 
 class BooksListView(TitleMixin, TemplateView):
     template_name = 'books/shop.html'
@@ -41,9 +33,7 @@ class BooksListView(TitleMixin, TemplateView):
                                      params={'category': category})
             else:
                 books = requests.get(f'http://127.0.0.1:8001/api/books/all/', params={'category': category})
-
         self.extra_context['all_books'] = books.json()
-
         return super().get(self, request, *args, **kwargs)
 
 
@@ -83,17 +73,13 @@ class ProfileView(TitleMixin, FormView):
             kwargs['initial']['last_name'] = context.get('last_name')
             kwargs['initial']['username'] = context.get('username')
             kwargs['initial']['email'] = context.get('email')
-        # kwargs['my_attr'] = 'my_value'
         return kwargs
 
     def form_valid(self, form):
-        response = requests.patch(f'http://127.0.0.1:8000/api/users/user/{self.user_id}/',
-                                  headers={'Authorization': f'Token {self.request.COOKIES.get("Authorization")}'},
-                                  data=form.cleaned_data)
+        requests.patch(f'http://127.0.0.1:8000/api/users/user/{self.user_id}/',
+                       headers={'Authorization': f'Token {self.request.COOKIES.get("Authorization")}'},
+                       data=form.cleaned_data)
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
 
 class ReviewDetailView(TitleMixin, TemplateView):

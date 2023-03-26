@@ -1,9 +1,7 @@
 import requests
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.views import View
 from django.views.generic import TemplateView, FormView
 from rest_framework import status
 
