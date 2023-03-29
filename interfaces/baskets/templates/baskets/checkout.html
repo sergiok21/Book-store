@@ -1,10 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'books/base.html' %}
+
+
+{% block content %}
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="colored">
+					<h1 class="page-title">Checkout</h1>
+					<div class="breadcum-items">
+						<span class="item">
+                            <a href="{% url 'books:index' %}">Home /</a>
+                            <a href="{% url 'baskets:basket' %}">Basket /</a>
+                        </span>
+						<span class="item colored">Checkout</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!--site-banner-->
+
+<section class="padding-large">
+	<div class="container">
+		<div class="row">
+
+{#            <div class="col-md-6 p-0" data-aos="fade-up">#}
+				<div>
+					<h2>Fill in the empty fields</h2>
+                    <h4>Total quantity: {{ basket_info.total_quantity }}.</h4>
+                    <h4>Total sum: {{ basket_info.total_sum }}$.</h4>
+					<form name="contactform" action="{% url 'baskets:checkout' %}" method="post" class="contact-form d-flex flex-wrap mt-4">
+						{% csrf_token %}
+                        <div class="row">
+					    	<div class="col-md-6">
+								{{ form.first_name }}
+							</div>
+							<div class="col-md-6">
+								{{ form.last_name }}
+							</div>
+						</div>
+
+                        <div class="row">
+					    	<div class="col-md-6">
+								{{ form.email }}
+							</div>
+							<div class="col-md-6">
+								{{ form.phone }}
+							</div>
+						</div>
+
+						<div class="row">
+                            {{ form.address }}
+                        </div>
+						<div class="row" style="display: flex; justify-content: center">
+                            <button type="submit" name="submit" class="btn btn-full btn-rounded">Accept</button>
+                        </div>
+					</form>
+				</div><!--contact-information-->
+{#			</div><!--col-md-6-->#}
+
+		</div>
+	</div>
+</section>
+{% endblock %}

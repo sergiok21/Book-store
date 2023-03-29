@@ -14,19 +14,13 @@ class UserLoginView(TitleMixin, FormView):
     form_class = UserLoginForm
     title = 'Book Store - Login'
     success_url = reverse_lazy('books:index')
-    
-    def get(self, request, *args, **kwargs):
-        if request.COOKIES.get('Authorization'):
-            response = HttpResponseRedirect('http://127.0.0.1:8005')
-            response.delete_cookie('Authorization')
-            return response
-        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         req = requests.post('http://127.0.0.1:8000/api/users/login/', data=form.cleaned_data)
         if req.status_code == status.HTTP_200_OK:
             response = super().form_valid(form)
             response.set_cookie('Authorization', req.cookies.get('Authorization'))
+            response.set_cookie('User', req.cookies.get('User'))
             return response
         else:
             form._errors = req.json().get('text')

@@ -32,9 +32,13 @@ def books_info(request):
 def user_info(request):
     context = {'username': None}
     token = request.COOKIES.get('Authorization')
+    user = request.COOKIES.get('User')
     if token:
-        req = requests.get('http://127.0.0.1:8000/api/users/login',
-                           headers={'Authorization': f'Token {token}'},
-                           params={'token': token})
-        context = json.loads(req.text).get('user_data')
+        header = {'Authorization': f'Token {token}'}
+        cookies = {'User': user}
+        login = requests.get('http://127.0.0.1:8000/api/users/login/', headers=header)
+        basket = requests.get('http://127.0.0.1:8003/api/baskets/total/',
+                              headers=header, cookies=cookies)
+        context = json.loads(login.text).get('user_data')
+        context['basket_info'] = json.loads(basket.text)
     return context

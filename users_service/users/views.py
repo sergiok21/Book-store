@@ -19,8 +19,8 @@ class LoginAPIView(APIView):
 
     @authentication_classes([TokenAuthentication])
     def get(self, request):
-        if request.query_params.get('token'):
-            token = request.query_params.get('token')
+        if request.auth.key:
+            token = request.auth.key
             token_obj = Token.objects.filter(key=token)
             if token_obj.exists():
                 token = token_obj.first()
@@ -43,6 +43,7 @@ class LoginAPIView(APIView):
             response_data = {'token': token.key if token else created}
             response = Response(response_data, status=status.HTTP_200_OK)
             response.set_cookie('Authorization', token.key if token else created)
+            response.set_cookie('User', user.id)
             return response
 
 
@@ -94,6 +95,7 @@ class LogoutAPIView(APIView):
         if request.COOKIES.get('Authorization'):
             response = HttpResponseRedirect('http://127.0.0.1:8005/books/')
             response.delete_cookie('Authorization')
+            response.delete_cookie('User')
             return response
         else:
             return Response({'detail': 'Logout without token'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -105,4 +107,5 @@ class CallbackView(View):
         token, created = Token.objects.get_or_create(user=self.request.user)
         response['HTTP_AUTHORIZATION'] = f'Token ' + token.key if token else created
         response.set_cookie('Authorization', token.key if token else created)
+        response.set_cookie('User', request.user.id)
         return response

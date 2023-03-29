@@ -52,10 +52,11 @@
                            class="user-account for-buy"><i class="icon icon-user"></i><span>
                             {% if username %} {{ username }} {% else %} Account {% endif %}
                         </span></a>
-						<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span> Cart: (0 $)</span></a>
+						<a href="{% url 'baskets:basket' %}" class="cart for-buy"><i class="icon icon-clipboard"></i>
+                            <span> Cart: ({% if basket_info %} {{ basket_info.total_sum }} {% else %} 0 {% endif %} $)</span>
+                        </a>
 
 						<div class="action-menu">
-
 							<div class="search-bar">
 								<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
 									<i class="icon icon-search"></i>

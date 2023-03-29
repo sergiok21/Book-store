@@ -89,7 +89,7 @@ class ReviewDetailView(TitleMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         book_id = kwargs.get('pk')
         if book_id:
-            book = requests.get(f'http://127.0.0.1:8001/api/books/all/{book_id}')
+            book = requests.get(f'http://127.0.0.1:8001/api/books/all/{book_id}/')
             self.extra_context = {'book': book.json()}
 
         return super().get(self, request, *args, **kwargs)

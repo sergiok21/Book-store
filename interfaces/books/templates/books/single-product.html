@@ -17,10 +17,13 @@
 					<p> </p>
 					<span class="price colored"><b>${{ book.price }}</b></span>
 					<p>{{ book.description }}</p>
-					<button type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
-					
-				</div>
-			</div>
+                    <form action="{% if username %} {% url 'baskets:add' book.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button">Add to cart</button>
+                    </form>
+
+                </div>
+            </div>
 
 		</div>
 	</div>

@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'books/base.html' %}
+
+
+{% block content %}
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="colored">
+					<h1 class="page-title">Basket</h1>
+					<div class="breadcum-items">
+						<span class="item"><a href="{% url 'books:index' %}">Home /</a></span>
+						<span class="item colored">Basket</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!--site-banner-->
+
+<section class="padding-large">
+	<div class="container">
+		<div class="row">
+			<div class="products-grid grid">
+                {% for basket in baskets %}
+                    <figure class="product-style">
+                        <a href="{% url 'books:review' basket.book_id %}">
+                            <img src="{{ basket.image }}" alt="Books" class="product-item">
+                        </a>
+                        <figcaption>
+                            <h3>{{ basket.name }}</h3>
+                            <p>Quantity: {{ basket.quantity }}</p>
+                            <div class="item-price">$ {{ basket.price }}</div>
+                            <form action="{% if username %} {% url 'baskets:remove' basket.id %} {% else %} {% url 'users:login' %} {% endif %}"
+                                  style="display: flex; justify-content: center">
+                                <button type="submit" class="btn btn-full btn-rounded">Delete</button>
+                            </form>
+                        </figcaption>
+                    </figure>
+                {% endfor %}
+	    	</div>
+
+            <div class="row">
+                {% if baskets %}
+                    <form action="{% if username %} {% url 'baskets:checkout' %} {% else %} {% url 'users:login' %} {% endif %}"
+                          style="display: flex; justify-content: center">
+                        <button type="submit" class="btn btn-full btn-rounded">Checkout</button>
+                    </form>
+                {% else %}
+                    <h2 style="display: flex; justify-content: center">Empty cart :(</h2>
+                {% endif %}
+            </div>
+		</div>
+	</div>
+</section>
+{% endblock %}
