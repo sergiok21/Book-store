@@ -2,4 +2,6 @@
 venv/
 
 **/__pycache__/
-books_service/.env
+**/.env
+baskets_service/baskets/router.py
+baskets_service/common/

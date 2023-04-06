@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from books.models import Book, BookCategory, Preview, Recommendation, Partner, Message, Contact
+from .models import Book, BookCategory, Preview, Recommendation, Partner, Message, Contact
 
 
 @admin.register(Book)
@@ -54,7 +54,7 @@ class PartnerAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ['__str__']
-    fields = [('email', 'phone'), ('country', 'city'), ('street', 'house', 'corps', 'postal')]
+    fields = [('email', 'phone'), ('country', 'city'), ('street', 'house'), ('corps', 'postal')]
 
 
 @admin.register(Message)

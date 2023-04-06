@@ -1,0 +1,31 @@
+{% extends 'books/base.html' %}
+
+{% block content %}
+<section class="bg-sand padding-large" data-aos="fade-up">
+	<div class="container">
+		<div class="row">
+
+            <figure class="product-style" style="pointer-events: none">
+                <div class="col-md-4" style="margin-right: 50px">
+                    <img class="product-item" src="{{ book.image }}">
+                </div>
+            </figure>
+
+			<div class="col-md-6 pl-5">
+				<div class="product-detail">
+					<h1>{{ book.name }}</h1>
+					<p> </p>
+					<span class="price colored"><b>${{ book.price }}</b></span>
+					<p>{{ book.description }}</p>
+                    <form action="{% if username %} {% url 'baskets:add' book.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button">Add to cart</button>
+                    </form>
+
+                </div>
+            </div>
+
+		</div>
+	</div>
+</section>
+{% endblock %}

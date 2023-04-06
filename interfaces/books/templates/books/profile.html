@@ -1,0 +1,44 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+{% block content %}
+    <section>
+        <div class="container">
+
+            <div class="row">
+                <div style="display: flex; justify-content: space-between;">
+                    <h2>Your profile</h2>
+                    <a href="{% url 'users:logout' %}" class="nav-link">
+                        <h4 style="color: #731A1A;">
+                            Exit
+                            <img src="{% static 'vendor/images/exit-door-32.png' %}" value="Exit"/>
+                        </h4>
+                    </a>
+                </div>
+                <form name="contactform" action="{% url 'books:profile' %}" method="post" class="contact-form d-flex flex-wrap mt-4">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.username }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-full btn-rounded">Save information</button>
+                </form>
+
+            </div><!--contact-information-->
+
+        </div><!--col-md-6-->
+    </section>
+{% endblock %}
