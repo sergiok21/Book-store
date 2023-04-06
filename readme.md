@@ -4,15 +4,11 @@ This project is a demonstration book store that has several functional features.
 
 ## Details:
 
----
-
 The application has both a user interface and APIs - `GET`, `POST`, `PUT`, `PATCH`, `DELETE`. As additional constraints have been introduced in the project, it is a RESTful project.
 
 Two databases are used - PostgreSQL and Redis. The non-relational database is used for caching objects and interacting with Celery - sending delayed notifications.
 
 ## Installation:
-
----
 
 * Create a virtual environment first.
 
@@ -72,7 +68,5 @@ python manage.py runserver <IP>:<Port>
 *Note. To make everything work correctly, Redis must also be installed.*
 
 ## Results:
-
----
 
 The application can be interacted with both through the interface and APIs. Interaction for admin users is provided to create delayed tasks. The API available for the admin user is protected from regular user requests.
