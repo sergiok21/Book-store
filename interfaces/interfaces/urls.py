@@ -7,6 +7,7 @@ urlpatterns = [
     path('books/', include('books.urls', namespace='books')),
     path('users/', include('users.urls', namespace='users')),
     path('baskets/', include('baskets.urls', namespace='baskets')),
+    path('orders/', include('orders.urls', namespace='orders')),
 ]
 
 if settings.DEBUG:
