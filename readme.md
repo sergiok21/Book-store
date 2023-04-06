@@ -1,7 +1,5 @@
 ## Introduction:
 
----
-
 This project is a demonstration book store that has several functional features. To ensure high availability and scalability of the system, microservices architecture is used.
 
 ## Details:
