@@ -35,3 +35,9 @@ class CheckoutForm(forms.Form):
         'minlength': '2',
         'type': 'text',
     }))
+    message = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'u-full-width',
+        'name': 'message',
+        'placeholder': 'Message',
+        'style': 'height: 150px',
+    }))

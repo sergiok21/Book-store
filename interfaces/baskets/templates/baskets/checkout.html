@@ -24,42 +24,48 @@
 <section class="padding-large">
 	<div class="container">
 		<div class="row">
+            <div>
+                <h2>Fill in the empty fields</h2>
+                <h4>Total quantity: {{ basket_info.total_quantity }}.</h4>
+                <h4>Total sum: {{ basket_info.total_sum }}$.</h4>
+                <form name="contactform" action="{% url 'baskets:checkout' %}" method="post" class="contact-form d-flex flex-wrap mt-4">
+                    {% csrf_token %}
 
-{#            <div class="col-md-6 p-0" data-aos="fade-up">#}
-				<div>
-					<h2>Fill in the empty fields</h2>
-                    <h4>Total quantity: {{ basket_info.total_quantity }}.</h4>
-                    <h4>Total sum: {{ basket_info.total_sum }}$.</h4>
-					<form name="contactform" action="{% url 'baskets:checkout' %}" method="post" class="contact-form d-flex flex-wrap mt-4">
-						{% csrf_token %}
-                        <div class="row">
-					    	<div class="col-md-6">
-								{{ form.first_name }}
-							</div>
-							<div class="col-md-6">
-								{{ form.last_name }}
-							</div>
-						</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.last_name }}
+                        </div>
+                    </div>
 
-                        <div class="row">
-					    	<div class="col-md-6">
-								{{ form.email }}
-							</div>
-							<div class="col-md-6">
-								{{ form.phone }}
-							</div>
-						</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.phone }}
+                        </div>
+                    </div>
 
-						<div class="row">
+                    <div class="row">
+                        <div class="col-md-12">
                             {{ form.address }}
                         </div>
-						<div class="row" style="display: flex; justify-content: center">
-                            <button type="submit" name="submit" class="btn btn-full btn-rounded">Accept</button>
-                        </div>
-					</form>
-				</div><!--contact-information-->
-{#			</div><!--col-md-6-->#}
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.message }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button type="submit" name="submit" class="btn btn-full btn-rounded">Accept</button>
+                    </div>
+                </form>
+            </div>
 		</div>
 	</div>
 </section>

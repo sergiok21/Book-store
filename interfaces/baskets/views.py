@@ -56,9 +56,20 @@ class BasketFormView(TitleMixin, FormView):
         headers = {'Authorization': f'Token {token}'}
         cookies = {'User': user_id}
 
-        delete_basket = requests.delete('http://127.0.0.1:8003/api/baskets/current/delete/',
-                                        headers=headers, cookies=cookies)
-        if delete_basket.status_code == status.HTTP_204_NO_CONTENT:
+        get_basket = requests.get('http://127.0.0.1:8003/api/baskets/current/',
+                                  headers=headers, cookies=cookies)
+        get_total = requests.get('http://127.0.0.1:8003/api/baskets/total/',
+                                 headers=headers, cookies=cookies)
+        result = {'extra_data': get_basket.text}
+        result.update(form.cleaned_data)
+        result.update(**json.loads(get_total.text))
+
+        send_order = requests.post('http://127.0.0.1:8004/api/orders/current/',
+                                   headers=headers, cookies=cookies, data=result)
+
+        if send_order.status_code == status.HTTP_201_CREATED:
+            requests.delete('http://127.0.0.1:8003/api/baskets/current/delete/',
+                            headers=headers, cookies=cookies)
             return super().form_valid(form)
         else:
             return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
