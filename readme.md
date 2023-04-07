@@ -90,3 +90,5 @@ TELEGRAM_KEY=<YOUR_KEY>
 ## Results:
 
 The application can be interacted with both through the interface and APIs. Interaction for admin users is provided to create delayed tasks. The API available for the admin user is protected from regular user requests.
+
+Additionally, the project was optimized by moving some functions from `context_processors` to a caching class-based view with Redis. As a result, query processing is 2 times faster.

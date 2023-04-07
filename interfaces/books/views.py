@@ -3,6 +3,7 @@ import json
 import requests
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView
+from django.core.cache import cache
 
 from books.forms import MessageForm, ProfileForm
 from common.views import TitleMixin
@@ -11,6 +12,31 @@ from common.views import TitleMixin
 class IndexTemplateView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
     title = 'Book Store'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        previews = cache.get('previews')
+        recommendations = cache.get('recommendations')
+        partners = cache.get('partners')
+
+        if previews or recommendations or partners:
+            context['previews'] = previews
+            context['recommendations'] = recommendations
+            context['partners'] = partners
+        else:
+            previews = requests.get('http://127.0.0.1:8001/api/books/previews/')
+            context['previews'] = previews.json().get('results')
+            cache.set('previews', context['previews'], 60)
+
+            recommendations = requests.get('http://127.0.0.1:8001/api/books/recommendations/')
+            context['recommendations'] = recommendations.json().get('results')
+            cache.set('recommendations', context['recommendations'], 60)
+
+            partners = requests.get('http://127.0.0.1:8001/api/books/partners/')
+            context['partners'] = partners.json()
+            cache.set('partners', context['partners'], 60)
+        return context
 
 
 class BooksTemplateView(TitleMixin, TemplateView):
@@ -43,10 +69,11 @@ class ContactFormView(TitleMixin, FormView):
     success_url = reverse_lazy('books:contact')
     title = 'Book Store - Contact'
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         response = requests.get('http://127.0.0.1:8001/api/books/contacts/')
-        self.extra_context = {'contacts': response.json()}
-        return super().get(self, request, *args, **kwargs)
+        context['contacts'] = response.json()
+        return context
 
     def form_valid(self, form):
         requests.post('http://127.0.0.1:8001/api/books/messages/', data=form.cleaned_data)

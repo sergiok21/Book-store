@@ -71,7 +71,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'books.context_processors.books_info',
-                'books.context_processors.general_recommendations',
                 'books.context_processors.user_info',
             ],
         },

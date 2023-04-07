@@ -3,20 +3,6 @@ import json
 import requests
 
 
-def general_recommendations(request):
-    context = {}
-
-    previews = requests.get('http://127.0.0.1:8001/api/books/previews/')
-    context['previews'] = previews.json().get('results')
-
-    recommendations = requests.get('http://127.0.0.1:8001/api/books/recommendations/')
-    context['recommendations'] = recommendations.json().get('results')
-
-    partners = requests.get('http://127.0.0.1:8001/api/books/partners/')
-    context['partners'] = partners.json()
-    return context
-
-
 def books_info(request):
     context = {}
 
