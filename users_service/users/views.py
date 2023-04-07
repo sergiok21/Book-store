@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 
 from users.models import User, EmailVerification
 from users.serializers import RegistrationSerializer, TokenSerializer, UserSerializer
-from users.tasks import send_telegram_message
+from users.tasks import send_order_to_telegram, send_order_to_email
 
 
 class LoginAPIView(APIView):
@@ -88,12 +88,14 @@ class UserAPIView(UpdateAPIView):
         return User.objects.filter(pk=self.request.user.id)
 
 
-class UserInfoAPIView(APIView):
-    authentication_classes = []
-    permission_classes = []
+class MessageDistributionAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        send_telegram_message(**request.data)
+        send_order_to_telegram.delay(**request.data)
+        send_order_to_email.delay(request.user.email, request.data['order'])
+        return Response({'detail': 'Done'}, status=status.HTTP_201_CREATED)
 
 
 class LogoutAPIView(APIView):

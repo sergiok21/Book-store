@@ -2,6 +2,7 @@ import json
 import uuid
 from datetime import timedelta
 from celery import shared_task
+from django.core.mail import send_mail
 from django.utils.timezone import now
 import telebot
 
@@ -22,9 +23,23 @@ def send_email_verification(user_id):
     return None
 
 
-@bot.message_handler(func=lambda m: True)
-def send_telegram_message(first_name, last_name, phone, message, total_sum, total_quantity, extra_data):
-    text = f'<b>New order</b>:\n' \
+@shared_task
+def send_order_to_email(email, order):
+    subject = f'Book Store - Order #{order}'
+    message = f'Your order has been successfully created! The manager will contact you shortly.'
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[email],
+        fail_silently=False,
+    )
+    return None
+
+
+@shared_task
+def send_order_to_telegram(order, first_name, last_name, phone, message, total_sum, total_quantity, extra_data):
+    text = f'<b>New order - #{order[0]}</b>:\n' \
            f'Name: <b>{first_name[0]}</b>\n' \
            f'Last name: <b>{last_name[0]}</b>\n' \
            f'Phone: <b>{phone[0]}</b>\n' \
@@ -40,3 +55,4 @@ def send_telegram_message(first_name, last_name, phone, message, total_sum, tota
         i += 1
     for manager in User.objects.filter(is_staff=True):
         bot.send_message(manager.telegram_id, text, parse_mode='html')
+    return None

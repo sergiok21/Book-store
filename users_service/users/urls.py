@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import LoginAPIView, RegistrationAPIView, CallbackView, UserAPIView, LogoutAPIView, \
-    VerificationAPIView, UserInfoAPIView
+    VerificationAPIView, MessageDistributionAPIView
 
 app_name = 'users'
 
@@ -12,6 +12,6 @@ urlpatterns = [
     path('registration/', RegistrationAPIView.as_view(), name='registration'),
     path('callback/', CallbackView.as_view(), name='callback'),
     path('user/<int:id>/', UserAPIView.as_view(), name='user'),
-    path('echo-all/', UserInfoAPIView.as_view(), name='user_info'),
+    path('echo-all/', MessageDistributionAPIView.as_view(), name='user_info'),
     path('verification/', VerificationAPIView.as_view(), name='verification'),
 ]

@@ -31,13 +31,18 @@ class OrderModelViewSet(ModelViewSet):
             total_sum = float(request.data['total_sum'])
             total_quantity = int(request.data['total_quantity'])
             user_id = self.request.COOKIES.get('User')
-            Order.objects.create(
+            order = Order.objects.create(
                 first_name=first_name, last_name=last_name, email=email, phone=phone,
                 address=address, message=message, extra_data=extra_data, user_id=user_id,
                 total_sum=total_sum, total_quantity=total_quantity
             )
+
+            headers = {'Authorization': f'{request.META.get("HTTP_AUTHORIZATION")}'}
+            cookies = {'User': request.COOKIES.get('User')}
+
             requests.post('http://127.0.0.1:8000/api/users/echo-all/',
                           data={
+                              'order': order.order_number,
                               'first_name': first_name,
                               'last_name': last_name,
                               'phone': phone,
@@ -45,7 +50,9 @@ class OrderModelViewSet(ModelViewSet):
                               'total_sum': total_sum,
                               'total_quantity': total_quantity,
                               'extra_data': extra_data
-                          })
+                          },
+                          headers=headers,
+                          cookies=cookies)
             return Response({'message': 'Success'}, status=status.HTTP_201_CREATED)
         except KeyError:
             return Response({'detail': 'Error'}, status=status.HTTP_400_BAD_REQUEST)
