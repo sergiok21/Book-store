@@ -25,7 +25,7 @@ class CustomPagination(PageNumberPagination):
         })
 
 
-class BookAPIView(PermissionMixin, ModelViewSet):
+class BookModelViewSet(PermissionMixin, ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     pagination_class = CustomPagination
@@ -59,13 +59,13 @@ class BookAPIView(PermissionMixin, ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class BookCategoryAPIView(PermissionMixin, ModelViewSet):
+class BookCategoryModelViewSet(PermissionMixin, ModelViewSet):
     queryset = BookCategory.objects.all()
     serializer_class = BookCategorySerializer
     pagination_class = None
 
 
-class PreviewAPIView(PermissionMixin, ModelViewSet):
+class PreviewModelViewSet(PermissionMixin, ModelViewSet):
     queryset = Preview.objects.all()
     serializer_class = PreviewSerializer
 
@@ -74,7 +74,7 @@ class PreviewAPIView(PermissionMixin, ModelViewSet):
         return queryset
 
 
-class RecommendationAPIView(PermissionMixin, ModelViewSet):
+class RecommendationModelViewSet(PermissionMixin, ModelViewSet):
     queryset = Recommendation.objects.all()
     serializer_class = RecommendationSerializer
 
@@ -83,19 +83,19 @@ class RecommendationAPIView(PermissionMixin, ModelViewSet):
         return queryset
 
 
-class PartnerAPIView(PermissionMixin, ModelViewSet):
+class PartnerModelViewSet(PermissionMixin, ModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
     pagination_class = None
 
 
-class ContactAPIView(PermissionMixin, ModelViewSet):
+class ContactModelViewSet(PermissionMixin, ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     pagination_class = None
 
 
-class MessageAPIView(APIView):
+class MessageModelViewSet(APIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     authentication_classes = []

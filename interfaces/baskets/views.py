@@ -9,7 +9,7 @@ from baskets.forms import CheckoutForm
 from common.views import TitleMixin
 
 
-class BasketListView(TitleMixin, TemplateView):
+class BasketTemplateView(TitleMixin, TemplateView):
     template_name = 'baskets/basket.html'
     title = 'Book Store - Basket'
 

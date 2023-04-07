@@ -8,12 +8,12 @@ from books.forms import MessageForm, ProfileForm
 from common.views import TitleMixin
 
 
-class IndexView(TitleMixin, TemplateView):
+class IndexTemplateView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
     title = 'Book Store'
 
 
-class BooksListView(TitleMixin, TemplateView):
+class BooksTemplateView(TitleMixin, TemplateView):
     template_name = 'books/shop.html'
     title = 'Book Store - Products'
 
@@ -37,7 +37,7 @@ class BooksListView(TitleMixin, TemplateView):
         return super().get(self, request, *args, **kwargs)
 
 
-class ContactCreateView(TitleMixin, FormView):
+class ContactFormView(TitleMixin, FormView):
     template_name = 'books/contact.html'
     form_class = MessageForm
     success_url = reverse_lazy('books:contact')
@@ -53,7 +53,7 @@ class ContactCreateView(TitleMixin, FormView):
         return super().form_valid(form)
 
 
-class ProfileView(TitleMixin, FormView):
+class ProfileFormView(TitleMixin, FormView):
     template_name = 'books/profile.html'
     form_class = ProfileForm
     success_url = reverse_lazy('books:profile')
@@ -82,7 +82,7 @@ class ProfileView(TitleMixin, FormView):
         return super().form_valid(form)
 
 
-class ReviewDetailView(TitleMixin, TemplateView):
+class ReviewTemplateView(TitleMixin, TemplateView):
     template_name = 'books/single-product.html'
     title = 'Book Store - Details'
 

@@ -11,7 +11,7 @@ from .models import Basket
 from .serializers import BasketSerializer, TotalBasketSerializer
 
 
-class BasketAPIView(ModelViewSet):
+class BasketModelViewSet(ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
     authentication_classes = [CustomTokenAuthentication]

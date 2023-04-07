@@ -29,7 +29,7 @@ class OrdersTemplateView(TitleMixin, TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-class CurrentOrderTemplateVIew(TitleMixin, TemplateView):
+class CurrentOrderTemplateView(TitleMixin, TemplateView):
     template_name = 'orders/current-order.html'
 
     def get(self, request, *args, **kwargs):

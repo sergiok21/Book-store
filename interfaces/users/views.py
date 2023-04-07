@@ -9,7 +9,7 @@ from common.views import TitleMixin
 from .forms import UserLoginForm, UserRegistrationForm
 
 
-class UserLoginView(TitleMixin, FormView):
+class UserLoginFormView(TitleMixin, FormView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
     title = 'Book Store - Login'
@@ -27,7 +27,7 @@ class UserLoginView(TitleMixin, FormView):
         return self.form_invalid(form)
 
 
-class UserRegistrationView(TitleMixin, SuccessMessageMixin, FormView):
+class UserRegistrationFormView(TitleMixin, SuccessMessageMixin, FormView):
     template_name = 'users/registration.html'
     form_class = UserRegistrationForm
     success_url = reverse_lazy('users:login')
@@ -36,7 +36,7 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, FormView):
     title = 'Book Store - Registration'
 
 
-class EmailVerificationView(TitleMixin, TemplateView):
+class EmailVerificationTemplateView(TitleMixin, TemplateView):
     template_name = 'users/email_verification.html'
     title = 'Book Store - E-mail confirmation'
 

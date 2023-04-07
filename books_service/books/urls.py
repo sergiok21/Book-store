@@ -1,20 +1,20 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import PreviewAPIView, RecommendationAPIView, PartnerAPIView, ContactAPIView, MessageAPIView,\
-    BookAPIView, BookCategoryAPIView
+from .views import PreviewModelViewSet, RecommendationModelViewSet, PartnerModelViewSet, ContactModelViewSet, MessageModelViewSet,\
+    BookModelViewSet, BookCategoryModelViewSet
 
 app_name = 'books'
 
 router = routers.DefaultRouter()
-router.register(r'all', BookAPIView)
-router.register(r'categories', BookCategoryAPIView)
-router.register(r'previews', PreviewAPIView)
-router.register(r'recommendations', RecommendationAPIView)
-router.register(r'partners', PartnerAPIView)
-router.register(r'contacts', ContactAPIView)
+router.register(r'all', BookModelViewSet)
+router.register(r'categories', BookCategoryModelViewSet)
+router.register(r'previews', PreviewModelViewSet)
+router.register(r'recommendations', RecommendationModelViewSet)
+router.register(r'partners', PartnerModelViewSet)
+router.register(r'contacts', ContactModelViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('messages/', MessageAPIView.as_view(), name='message')
+    path('messages/', MessageModelViewSet.as_view(), name='message')
 ]
