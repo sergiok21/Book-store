@@ -65,7 +65,7 @@ python manage.py loaddata books_service/fixtures/<file.json>
 python manage.py runserver <IP>:<Port>
 ```
 
-*Note. You also add ports to `.env`.*
+*Note. You also can add ports to `.env`.*
 
 * Run celery. For Windows, add `-P gevent`
 
