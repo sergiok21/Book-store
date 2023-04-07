@@ -8,6 +8,7 @@ from users_service import settings
 
 class User(AbstractUser):
     is_verified_email = models.BooleanField(default=False)
+    telegram_id = models.CharField(max_length=256, null=True, blank=True)
 
 
 class EmailVerification(models.Model):

@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 
 from users.models import User, EmailVerification
 from users.serializers import RegistrationSerializer, TokenSerializer, UserSerializer
+from users.tasks import send_telegram_message
 
 
 class LoginAPIView(APIView):
@@ -85,6 +86,14 @@ class UserAPIView(UpdateAPIView):
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.id)
+
+
+class UserInfoAPIView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        send_telegram_message(**request.data)
 
 
 class LogoutAPIView(APIView):

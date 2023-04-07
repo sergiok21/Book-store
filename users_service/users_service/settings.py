@@ -71,7 +71,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'users.oauth.SaveOAuthUserInSessionMiddleware'
 ]
 
 ROOT_URLCONF = 'users_service.urls'
@@ -188,7 +187,6 @@ LOGOUT_REDIRECT_URL = 'http://127.0.0.1:8005/books/'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    # 'users.oauth.CustomOAuth2Adapter'
 ]
 
 SITE_ID = 3
@@ -201,7 +199,6 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {'access_type': 'online'},
         'METHOD': 'oauth2',
-        # 'VERIFIED_EMAIL': True,
         'VERSION': 'v3',
     },
     'google': {
@@ -256,3 +253,6 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+
+# Telegram
+TELEGRAM_KEY = env('TELEGRAM_KEY')

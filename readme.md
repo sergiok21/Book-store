@@ -55,20 +55,34 @@ python manage.py loaddata books_service/fixtures/<file.json>
 ```
 
 * Launch the application:
-    - Users service - 8000.
-    - Books service - 8001.
-    - Baskets service - 8003.
-    - Orders service - 8004.
-    - Interfaces - 8005.
+    - Users service - `8000`.
+    - Books service - `8001`.
+    - Baskets service - `8003`.
+    - Orders service - `8004`.
+    - Interfaces - `8005`.
 
 ```
 python manage.py runserver <IP>:<Port>
 ```
 
+*Note. You also add ports to `.env`.*
+
 * Run celery. For Windows, add `-P gevent`
 
 ```
 celery -A users_service worker -l INFO
+```
+
+* Add information for E-mail distribution and Telegram Bot key to `users service`:
+
+```
+EMAIL_HOST=<HOST>
+EMAIL_PORT=<PORT>
+EMAIL_HOST_USER=<E-MAIL>
+EMAIL_HOST_PASSWORD=<APPLICATION_PASSWORD>
+EMAIL_USE_SSL=True
+
+TELEGRAM_KEY=<YOUR_KEY>
 ```
 
 *Note. To make everything work correctly, Redis must also be installed.*

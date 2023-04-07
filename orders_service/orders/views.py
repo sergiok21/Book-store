@@ -1,3 +1,4 @@
+import requests
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -35,6 +36,16 @@ class OrderModelViewSet(ModelViewSet):
                 address=address, message=message, extra_data=extra_data, user_id=user_id,
                 total_sum=total_sum, total_quantity=total_quantity
             )
+            requests.post('http://127.0.0.1:8000/api/users/echo-all/',
+                          data={
+                              'first_name': first_name,
+                              'last_name': last_name,
+                              'phone': phone,
+                              'message': message,
+                              'total_sum': total_sum,
+                              'total_quantity': total_quantity,
+                              'extra_data': extra_data
+                          })
             return Response({'message': 'Success'}, status=status.HTTP_201_CREATED)
         except KeyError:
             return Response({'detail': 'Error'}, status=status.HTTP_400_BAD_REQUEST)
